@@ -1,0 +1,35 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>图标联动</title>
+    <script src="jquery-3.3.1.min.js"></script>
+    <script src="g2-3.3.2.min.js"></script>
+    <script src="data-set-0.9.6.min.js"></script>
+</head>
+<body>
+
+</body>
+</html>
+
+<script>
+    //创建数据集 DataSet 实例，管理 state 状态量
+    const ds = new DataSet({
+        state: {
+            currentState: 'WY'
+        }
+    });
+
+    $.get('/g2test.csv', data => {
+        const dvForAll = ds
+            .createView('populationByAge', {
+                watchingStates: [], // 用空数组，使得这个实例不监听 state 变化
+            }) // 在 DataSet 实例下创建名为 populationByAge 的数据视图
+            .source(data, {
+                type: 'csv', // 使用 CSV 类型的 Connector 装载 data
+            });
+        console.log(dvForAll.rows);
+    });
+
+
+</script>
